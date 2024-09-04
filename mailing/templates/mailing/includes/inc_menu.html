@@ -1,0 +1,31 @@
+<h2>Меню</h2>
+<ul class="list-unstyled">
+    {% if user.is_authenticated %}
+    <li><a href="/" class="text-black">Главная</a></li>
+    <li><a href="/list" class="text-black">Клиенты</a></li>
+    <li><a href="/message_list" class="text-black">Сообщения</a></li>
+    <li><a href="/mailing_list" class="text-black">Расслыки</a></li>
+    <li><a href="/log_list" class="text-black">Журнал рассылок</a></li>
+    <li><a href="/blog/blog_list" class="text-black">Блог</a></li>
+    {% if perms.users.view_all_users or user.is_superuser %}
+    <li><a href="/users/user_list" class="text-black">Список пользователей</a></li>
+    {% endif %}
+    <hr>
+    {% else %}
+    <p class="h5 card-text">Сервис для управления рассылками</p>
+    <p class="h5 card-text">Авторизуйтесь для начала работы</p>
+    <li><a href="#" class="text-black">Блог</a></li>
+    <hr>
+    {% endif %}
+
+    {% if user.is_authenticated %}
+    <form method="post" action="{% url 'users:logout' %}">
+        {% csrf_token %}
+        <button class="btn btn-outline-primary" type="submit">Выйти</button>
+    </form>
+    {% else %}
+    <a class="btn btn-outline-primary" href="{% url 'users:register' %}">Регистрация</a>
+    <a class="btn btn-outline-primary" href="{% url 'users:login' %}">Войти</a>
+    <a class="btn btn-outline-primary" href="{% url 'users:password_reset' %}">Сброс пароля</a>
+    {% endif %}
+</ul>

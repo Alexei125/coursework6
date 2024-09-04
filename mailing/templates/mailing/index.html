@@ -1,0 +1,55 @@
+{% extends 'mailing/base.html'%}
+{% block content %}
+<section class="text-center">
+    <div class="container">
+        <h1>В данный момент на сайте</h1>
+    </div>
+</section>
+<br>
+<div class="container">
+    <div class="col-12">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <p class="h5 card-text">Клиентов: {{ active_clients }}</p>
+                        <p class="h5 card-text">Активных рассылок: {{ active_mailings }}</p>
+                        <p class="h5 card-text">Всего рассылок: {{ all_mailings }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+
+{% if user.is_authenticated %}
+<div class="container">
+
+        <a class="btn btn-primary mb-7" href="{% url 'mailing:client_create' %}">Добавить клиента</a>
+        <a class="btn btn-primary mb-7" href="{% url 'mailing:mailing_create' %}">Добавить рассылку</a>
+        <a class="btn btn-primary mb-7" href="{% url 'mailing:message_create' %}">Добавить сообщение</a>
+</div><br>
+{% endif %}
+<div class="album py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            {% for object in random_blogs %}
+            <div class="col-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <p class="card-text">
+                        <h2>{{ object.title}}</h2>
+                        <p class="card-text">Содержание: {{ object.body }}</p>
+                        <p class="card-text"> Создана {{ object.created_at }}</p>
+                        <p class="card-text">Просмотры- {{ object.views_count }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
